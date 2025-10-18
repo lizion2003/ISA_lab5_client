@@ -60,6 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Check if query is SELECT or INSERT
+        const queryType = query.toUpperCase();
+        if (!queryType.startsWith('SELECT') && !queryType.startsWith('INSERT')) {
+            showError('Only SELECT or INSERT queries are allowed');
+            return;
+        }
+
         // Show loading state
         submitBtn.disabled = true;
         submitBtn.textContent = 'Executing...';
