@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const insertBtn = document.getElementById('insertBtn');
     const resultsDiv = document.getElementById('results');
 
+    // API endpoint
+    const API_ENDPOINT = 'https://comp4537-lab5-iota.vercel.app/api/v1/sql/';
+
     /**
      * Handles the Insert button POST request
      */
@@ -18,9 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showLoading();
 
         try {
-            const endpoint = 'https://comp4537-lab5-iota.vercel.app/api/v1/sql/';
-            
-            const response = await fetch(endpoint, {
+            const response = await fetch(API_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,16 +74,30 @@ document.addEventListener('DOMContentLoaded', function() {
         showLoading();
 
         try {
-            // TODO: Replace with your actual API endpoint
-            const endpoint = 'https://comp4537-lab5-iota.vercel.app/api/v1/sql/';
+            let response;
+            const queryType = query.toUpperCase();
             
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ query: query })
-            });
+            if (queryType.startsWith('SELECT')) {
+                // GET request for SELECT queries
+                const url = new URL(API_ENDPOINT);
+                url.searchParams.append('query', query);
+                
+                response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } else {
+                // POST request for INSERT queries
+                response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: query })
+                });
+            }
 
             const data = await response.json();
 
