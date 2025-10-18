@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             // TODO: Replace with your actual API endpoint
-            const endpoint = '/api/query';
+            const endpoint = 'https://comp4537-lab5-iota.vercel.app/api/v1/sql/';
             
             const response = await fetch(endpoint, {
                 method: 'POST',
