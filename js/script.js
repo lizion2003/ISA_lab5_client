@@ -142,10 +142,5 @@ document.addEventListener('DOMContentLoaded', function() {
         return div.innerHTML;
     }
 
-    // Allow Ctrl+Enter to submit
-    sqlQuery.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && e.key === 'Enter') {
-            submitBtn.click();
-        }
-    });
+
 });
