@@ -79,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (queryType.startsWith('SELECT')) {
                 // GET request for SELECT queries
-                const url = new URL(API_ENDPOINT);
-                url.searchParams.append('query', query);
+                const encodedQuery = encodeURIComponent(query);
+                const url = API_ENDPOINT + encodedQuery;
                 
                 response = await fetch(url, {
                     method: 'GET',
