@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Query Interface</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>SQL Query Interface</h1>
+        
+        <div class="form-section">
+            <button id="insertBtn" type="button" class="action-btn">Insert Mock data</button>
+            
+            <label for="sqlQuery">Enter SQL Query:</label>
+            <textarea 
+                id="sqlQuery" 
+                name="sqlQuery" 
+                rows="10" 
+                placeholder="Enter your SQL query here...&#10;Example: SELECT * FROM users WHERE id = 1;"
+            ></textarea>
+            
+            <button id="submitBtn" type="button">Submit Query</button>
+        </div>
+
+        <div id="results" class="results-section">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>
