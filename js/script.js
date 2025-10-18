@@ -167,7 +167,12 @@ class InsertButtonHandler {
         this.button = button;
         this.apiClient = apiClient;
         this.uiManager = uiManager;
-        this.hardcodedQuery = "INSERT INTO patient (firstName,lastName,healthNum,age,notes) VALUES ('Sara','Brown','H10001','30','abc'), ('John','Smith','H10001','30','abc'), ('Jack','Ma','H10001','30','abc'), ('Elon','Musk','H10001','30','abc')";
+        this.hardcodedQuery = `INSERT INTO patient (firstName,lastName,healthNum,age,notes) 
+            VALUES 
+                ('Sara Brown','1901-01-01'), 
+                ('John Smith','1941-01-01'), 
+                ('Jack Ma','1961-01-30'), 
+                ('Elon Musk','1999-01-01')`;
         this.init();
     }
 
