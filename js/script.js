@@ -1,3 +1,9 @@
+/*
+AI declaration
+This code was generated with the assistance of Claude Sonnet 4.5.
+I use AI to help generate code and comments
+*/
+
 /**
  * SQL Query Interface - Client Side Script (OOP Version)
  */
