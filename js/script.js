@@ -2,6 +2,8 @@
  * SQL Query Interface - Client Side Script (OOP Version)
  */
 
+import STRINGS from '../lang/en/en.js';
+
 /**
  * Utility class for common helper functions
  */
@@ -45,7 +47,7 @@ class SQLApiClient {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error || 'Query execution failed');
+            throw new Error(data.error || STRINGS.msgQueryFailed);
         }
 
         return data;
@@ -68,7 +70,7 @@ class SQLApiClient {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error || 'Insert operation failed');
+            throw new Error(data.error || STRINGS.msgInsertFailed);
         }
 
         return data;
@@ -90,10 +92,11 @@ class UIManager {
      */
     showResults(data, operation = 'Query') {
         this.resultsDiv.className = 'results-section show';
+        const title = operation === 'Insert' ? STRINGS.insertResultsTitle : STRINGS.resultsTitle;
         this.resultsDiv.innerHTML = `
-            <h2>${operation} Results</h2>
+            <h2>${title}</h2>
             <div class="success">
-                <strong>Success!</strong> ${operation} executed successfully.
+                <strong>${STRINGS.labelSuccess}</strong> ${operation} ${STRINGS.successMessage}
             </div>
             <pre>${JSON.stringify(data, null, 2)}</pre>
         `;
@@ -106,9 +109,9 @@ class UIManager {
     showError(message) {
         this.resultsDiv.className = 'results-section show';
         this.resultsDiv.innerHTML = `
-            <h2>Error</h2>
+            <h2>${STRINGS.errorTitle}</h2>
             <div class="error">
-                <strong>Error:</strong> ${Utils.escapeHtml(message)}
+                <strong>${STRINGS.errorPrefix}</strong> ${Utils.escapeHtml(message)}
             </div>
         `;
     }
@@ -119,8 +122,8 @@ class UIManager {
     showLoading() {
         this.resultsDiv.className = 'results-section show';
         this.resultsDiv.innerHTML = `
-            <h2>Executing Query...</h2>
-            <p>Please wait while your query is being processed.</p>
+            <h2>${STRINGS.loadingTitle}</h2>
+            <p>${STRINGS.loadingMessage}</p>
         `;
     }
 }
@@ -206,7 +209,7 @@ class InsertButtonHandler {
      */
     setLoadingState(isLoading) {
         this.button.disabled = isLoading;
-        this.button.textContent = isLoading ? 'Inserting...' : 'Insert';
+        this.button.textContent = isLoading ? STRINGS.btnInserting : STRINGS.btnInsertMockData;
     }
 }
 
@@ -237,12 +240,12 @@ class SubmitButtonHandler {
 
         // Validate input
         if (!QueryValidator.isNotEmpty(query)) {
-            this.uiManager.showError('Please enter a SQL query');
+            this.uiManager.showError(STRINGS.msgEnterQuery);
             return;
         }
 
         if (!QueryValidator.isAllowedType(query)) {
-            this.uiManager.showError('Only SELECT or INSERT queries are allowed');
+            this.uiManager.showError(STRINGS.msgOnlySelectInsert);
             return;
         }
 
@@ -273,7 +276,7 @@ class SubmitButtonHandler {
      */
     setLoadingState(isLoading) {
         this.button.disabled = isLoading;
-        this.button.textContent = isLoading ? 'Executing...' : 'Submit Query';
+        this.button.textContent = isLoading ? STRINGS.btnExecuting : STRINGS.btnSubmit;
     }
 }
 
@@ -290,11 +293,21 @@ class SQLQueryApp {
      * Initialize the application
      */
     init() {
+        // Set page content from language file
+        document.getElementById('pageTitle').textContent = STRINGS.pageTitle;
+        document.getElementById('mainHeading').textContent = STRINGS.mainHeading;
+        document.getElementById('labelQuery').textContent = STRINGS.labelQuery;
+        
         // Get DOM elements
         const sqlQuery = document.getElementById('sqlQuery');
         const submitBtn = document.getElementById('submitBtn');
         const insertBtn = document.getElementById('insertBtn');
         const resultsDiv = document.getElementById('results');
+
+        // Set dynamic content
+        sqlQuery.placeholder = STRINGS.placeholderQuery;
+        submitBtn.textContent = STRINGS.btnSubmit;
+        insertBtn.textContent = STRINGS.btnInsertMockData;
 
         // Initialize instances
         const apiClient = new SQLApiClient(this.API_ENDPOINT);
