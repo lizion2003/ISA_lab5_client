@@ -93,12 +93,40 @@ class UIManager {
     showResults(data, operation = 'Query') {
         this.resultsDiv.className = 'results-section show';
         const title = operation === 'Insert' ? STRINGS.insertResultsTitle : STRINGS.resultsTitle;
+        
+        let contentHTML = '';
+        
+        // Check if data has rows array (SELECT query result)
+        if (data.rows && Array.isArray(data.rows) && data.rows.length > 0) {
+            // Create table
+            const columns = Object.keys(data.rows[0]);
+            contentHTML = `
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            ${columns.map(col => `<th>${Utils.escapeHtml(col)}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.rows.map(row => `
+                            <tr>
+                                ${columns.map(col => `<td>${Utils.escapeHtml(String(row[col]))}</td>`).join('')}
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        } else {
+            // Show JSON for other responses
+            contentHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+        
         this.resultsDiv.innerHTML = `
             <h2>${title}</h2>
             <div class="success">
                 <strong>${STRINGS.labelSuccess}</strong> ${operation} ${STRINGS.successMessage}
             </div>
-            <pre>${JSON.stringify(data, null, 2)}</pre>
+            ${contentHTML}
         `;
     }
 
