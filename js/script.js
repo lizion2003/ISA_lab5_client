@@ -272,14 +272,9 @@ class SubmitButtonHandler {
     async handleClick() {
         const query = this.queryInput.value.trim();
 
-        // Validate input
-        if (!QueryValidator.isNotEmpty(query)) {
+        // Check if query is empty
+        if (!query) {
             this.uiManager.showError(STRINGS.msgEnterQuery);
-            return;
-        }
-
-        if (!QueryValidator.isAllowedType(query)) {
-            this.uiManager.showError(STRINGS.msgOnlySelectInsert);
             return;
         }
 

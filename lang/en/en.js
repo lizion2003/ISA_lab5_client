@@ -7,7 +7,7 @@ export default {
     pageTitle: 'SQL Query Interface',
     mainHeading: 'SQL Query Interface',
     labelQuery: 'Enter SQL Query:',
-    placeholderQuery: 'Enter your SQL query here...\nExample: SELECT * FROM users WHERE id = 1;',
+    placeholderQuery: 'Enter your SQL query here...\nExample: SELECT * FROM patient;',
     
     // Button text
     btnInsert: 'Insert',
